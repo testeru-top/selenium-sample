@@ -10,19 +10,17 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>sele-chrom-basic</artifactId>
-
+    <properties>
+        <selenium.version>4.3.0</selenium.version>
+    </properties>
 
     <dependencies>
         <dependency>
-            <groupId>io.qameta.allure</groupId>
-            <artifactId>allure-maven</artifactId>
-            <version>2.10.0</version>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>${selenium.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-            <version>4.5.13</version>
-        </dependency>
+
     </dependencies>
 
 </project>

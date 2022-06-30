@@ -26,10 +26,18 @@
         <!-- plugins -->
         <maven.compiler.version>3.8.1</maven.compiler.version>
         <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
-        <!-- log日志 -->
+        <poi.version>5.2.2</poi.version>
+        <!-- 断言-->
+        <hamcrest.version>2.2</hamcrest.version>
         <slf4j.version>2.0.0-alpha7</slf4j.version>
         <logback.version>1.3.0-alpha16</logback.version>
-        <selenium.version>4.3.0</selenium.version>
+        <jackson.version>2.13.1</jackson.version>
+        <!--allure报告-->
+        <allure.version>2.17.2</allure.version>
+        <aspectj.version>1.9.5</aspectj.version>
+        <allure.cmd.download.url>
+            https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline
+        </allure.cmd.download.url>
     </properties>
 
     <!--    物料清单 (BOM)-->
@@ -69,6 +77,18 @@
         </dependency>
 
         <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest</artifactId>
+            <version>${hamcrest.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.12.0</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>${slf4j.version}</version>
@@ -79,15 +99,67 @@
             <version>${logback.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-java</artifactId>
-            <version>${selenium.version}</version>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.22</version>
+            <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-yaml</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <!--        allure报告-->
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-junit5</artifactId>
+            <version>${allure.version}</version>
+        </dependency>
+
     </dependencies>
 
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven-surefire-plugin.version}</version>
+                <configuration>
+                    <argLine>
+                        -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+                    </argLine>
+                    <includes>
+                        <!--                        <include>**/*Test.class</include>-->
+                        <include>**/Suite2Test</include>
+                    </includes>
+                    <!--                    <excludes>-->
+                    <!--                        <exclude>com/testeru/suites/cases2/*Test.class</exclude>-->
+                    <!--                        <exclude>*Suite*Test</exclude>-->
+                    <!--                    </excludes>-->
+                    <properties>
+                        <!--                        <test>com.ceshiren.str.StrTest </test>-->
+                        <env>good</env>
+                    </properties>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.junit.jupiter</groupId>
+                        <artifactId>junit-jupiter-engine</artifactId>
+                        <version>${junit.jupiter.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.junit.vintage</groupId>
+                        <artifactId>junit-vintage-engine</artifactId>
+                        <version>${junit.jupiter.version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -101,6 +173,7 @@
                     <encoding>${maven.compiler.encoding}</encoding>
                 </configuration>
             </plugin>
+            
         </plugins>
     </build>
 </project>
