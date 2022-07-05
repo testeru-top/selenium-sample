@@ -7,6 +7,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="sele-css" />
         <module name="sele-chrom-basic" />
         <module name="sele-autodriver" />
       </profile>
@@ -16,6 +17,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="sele-autodriver" options="-parameters" />
       <module name="sele-chrom-basic" options="-parameters" />
+      <module name="sele-css" options="-parameters" />
       <module name="selenium-sample" options="" />
     </option>
   </component>
